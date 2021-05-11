@@ -1,0 +1,7 @@
+C:\Users\Lucas\Desktop\YoutubeDownloader\YoutubeDownloaderWPF.exe
+C:\Users\Lucas\Desktop\YoutubeDownloader\YoutubeDownloaderWPF.dll
+C:\Users\Lucas\Desktop\YoutubeDownloader\YoutubeDownloaderWPF.deps.json
+C:\Users\Lucas\Desktop\YoutubeDownloader\YoutubeDownloaderWPF.runtimeconfig.json
+C:\Users\Lucas\Desktop\YoutubeDownloader\YoutubeDownloaderWPF.pdb
+C:\Users\Lucas\Desktop\YoutubeDownloader\AngleSharp.dll
+C:\Users\Lucas\Desktop\YoutubeDownloader\YoutubeExplode.dll

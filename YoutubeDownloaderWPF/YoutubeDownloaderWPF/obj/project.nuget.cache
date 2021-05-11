@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "UN/4zzxuvkMJka2CcP8+oz16VdfJDuDIEzNimwwwBxMJyXgft1uuRC2nqE959Blkj5EdeTFHc/penXTUcv/E5w==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Lucas\\Desktop\\Github\\YoutubeDownloader\\YoutubeDownloaderWPF\\YoutubeDownloaderWPF\\YoutubeDownloaderWPF.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Lucas\\.nuget\\packages\\anglesharp\\0.14.0\\anglesharp.0.14.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.runtime.compilerservices.unsafe\\4.5.0\\system.runtime.compilerservices.unsafe.4.5.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.text.encoding.codepages\\4.5.0\\system.text.encoding.codepages.4.5.0.nupkg.sha512",
+    "C:\\Users\\Lucas\\.nuget\\packages\\system.text.json\\4.7.2\\system.text.json.4.7.2.nupkg.sha512",
+    "C:\\Users\\Lucas\\.nuget\\packages\\youtubeexplode\\6.0.0\\youtubeexplode.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
