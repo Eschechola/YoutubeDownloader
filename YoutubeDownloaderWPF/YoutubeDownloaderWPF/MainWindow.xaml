@@ -6,48 +6,258 @@
         xmlns:local="clr-namespace:YoutubeDownloaderWPF"
         mc:Ignorable="d"
         ResizeMode="CanMinimize"
-        Title="Youtube Downloader" Height="450" Width="800">
-    <StackPanel>
-        <Label
-            Content="Digite o link do vídeo do youtube abaixo."
-            Width="610"
-            Margin="0, 100, 0, 0"
-            FontSize="20"/>
-        <TextBox
-            Width="600"
-            Height="45"
-            Margin="0,10,0,0"
-            FontSize="22"
-            Padding="5"
-            Name="TxtLinkInput"
-            />
+        Title="Youtube Downloader" Height="800" Width="1200">
 
+    <Window.Resources>
+        <Style x:Key="DarkComboBox" TargetType="{x:Type ComboBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton Grid.Column="2" Focusable="false" IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" >
+                                <ToggleButton.Template>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="5*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Border x:Name="Border" Grid.ColumnSpan="2" Background="#424242" BorderBrush="#fff" BorderThickness="1" />
+                                            <Border Grid.Column="0" Margin="1" Background="#424242" BorderBrush="#fff" BorderThickness="0,0,1,0" />
+                                            <Path x:Name="Arrow" Grid.Column="1"  Fill="#ffffff" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z"/>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                                                <Setter TargetName="Border" Property="Background" Value="#3b3b3b" />
+                                            </Trigger>
+                                            <Trigger Property="ToggleButton.IsChecked" Value="true">
+                                                <Setter TargetName="Border" Property="Background" Value="#3b3b3b" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Margin="10,0,0,0" HorizontalAlignment="Left" />
+                            <TextBox x:Name="PART_EditableTextBox" Visibility="Hidden" IsReadOnly="True" Background="#424242"/>
+                            <Popup Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True"  Focusable="False" PopupAnimation="Slide">
+                                <Grid  Name="DropDown" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border x:Name="DropDownBorder" Background="#424242" />
+                                    <ScrollViewer SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+            </Style.Triggers>
+            </Style>
+    </Window.Resources>
+
+    <ScrollViewer
+        VerticalScrollBarVisibility="Auto">
         <StackPanel
-            Width="300"
-            Height="50"
-            Margin="0, 20, 0, 0">
-            <Button
-                Background="MediumAquamarine"
-                BorderBrush="Transparent"
-                BorderThickness="0"
-                Foreground="White"
-                Padding="20, 10"
-                FontSize="18"
-                Cursor="Hand"
-                Name="BtnDownload"
-                Click="BtnDownloadClick"
-                Content="Baixar"/>
-        </StackPanel>
+            Background="#181818">
+            <Border 
+                Background="#212121"
+                BorderBrush="#212121"
+                Margin="30,10,30,0"
+                CornerRadius="30,30,30,30">
+                <StackPanel
+                    Orientation="Horizontal"
+                    Margin="30,10,30,10">
+                    <Label
+                        Height="40"
+                        FontSize="15"
+                        Padding="8"
+                        Foreground="#ffffff"
+                        FontWeight="Bold"
+                        Content="Status: " />
 
-        <StackPanel>
-            <Label
-                Name="LblStatus"
-                FontSize="20"
-                Width="300"
-                HorizontalContentAlignment="Center"
-                Content="Nenhum vídeo na fila"
-                Foreground="Gray"
-                Margin="0, 20, 0, 0"/>
+                    <Label
+                        Height="40"
+                        FontSize="15"
+                        Padding="0,8,0,0"
+                        Margin="-5"
+                        FontWeight="UltraBold"
+                        Foreground="#ffffff"
+                        Content="NENHUM VÍDEO NA FILA"
+                        Name="LblStatus"/>
+                </StackPanel>
+            </Border>
+            
+            <Border 
+                Background="#212121"
+                BorderBrush="#212121"
+                Margin="30,10,30,0"
+                CornerRadius="30,30,30,30">
+                <Grid
+                    Margin="30,0,30,10"
+                    VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="90"/>
+                    </Grid.RowDefinitions>
+
+                    <Label 
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Foreground="#ffffff"
+                        FontWeight="Bold"
+                        Content="Diretório de download"
+                        FontSize="15"
+                        Margin="10,20,0,0"/>
+
+                    <TextBox
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Height="40"
+                        FontSize="15"
+                        Padding="8"
+                        Background="#424242"
+                        Foreground="#e8e8e8"
+                        Name="TxtDirectory"
+                        Width="490">
+                        C:\YoutubeDownloader\Downloads
+                    </TextBox>
+
+
+                    <Label 
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Foreground="#ffffff"
+                        FontWeight="Bold"
+                        Content="Tipo de Download"
+                        FontSize="15"
+                        Margin="10,20,0,0"/>
+
+                    <ComboBox 
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Width="490"
+                        Height="40"
+                        FontSize="15"
+                        VerticalContentAlignment="Center"
+                        Name="ComboDownloadType"
+                        Style="{StaticResource DarkComboBox}">
+                        <ComboBoxItem IsSelected="True">
+                            <TextBlock VerticalAlignment="Center" Foreground="#fff">Vídeo (.mp4)</TextBlock>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <TextBlock VerticalAlignment="Center" Foreground="#fff">Música (.mp3)</TextBlock>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <TextBlock VerticalAlignment="Center" Foreground="#fff">Playlist de Vídeo (.mp4)</TextBlock>
+                        </ComboBoxItem>
+                        <ComboBoxItem   >
+                            <TextBlock VerticalAlignment="Center" Foreground="#fff">Playlist de Música (.mp3)</TextBlock>
+                        </ComboBoxItem>
+                    </ComboBox>
+
+
+                    <Label 
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Foreground="#ffffff"
+                        FontWeight="Bold"
+                        Content="Link do vídeo ou playlist"
+                        FontSize="15"
+                        Margin="10,20,0,0"/>
+
+                    <TextBox
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Background="#424242"
+                        Foreground="#e8e8e8"
+                        Height="40"
+                        FontSize="15"
+                        Padding="8"
+                        Name="TxtLink"
+                        Width="1020">
+                        https://www.youtube.com/watch?v=NCtzkaL2t_Y
+                    </TextBox>
+
+                    <Button
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Width="300"
+                        Margin="0,20"
+                        Background="#2D4263"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        Foreground="White"
+                        Padding="0"
+                        FontSize="15"
+                        Cursor="Hand"
+                        Name="BtnSearch"
+                        Click="ButtonSearchClickEvent"
+                        Content="Pesquisar"/>
+
+                    <Button
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Width="300"
+                        Margin="0,20"
+                        Background="#3E065F"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        Foreground="White"
+                        Padding="0"
+                        FontSize="15"
+                        Cursor="Hand"
+                        Name="BtnDownload"
+                        Visibility="Collapsed"
+                        Click="ButtonDownloadClickEvent"
+                        Content="Baixar Tudo"/>
+                </Grid>
+            </Border>
+
+            <Border 
+                Background="#212121"
+                BorderBrush="#212121"
+                Margin="30,10,30,20"
+                CornerRadius="30,30,30,30">
+                <StackPanel
+                    Orientation="Vertical"
+                    Margin="30,10,40,40">
+                    <Label
+                        Height="40"
+                        FontSize="15"
+                        Padding="8"
+                        Content="Resulados da Busca"
+                        Foreground="#ffffff"
+                        FontWeight="Bold"/>
+
+                    <Label
+                        Margin="420,0,0,0"
+                        Height="40"
+                        FontSize="15"
+                        Padding="8"
+                        Content="Nenhuma busca foi realizada"
+                        Foreground="#969696"
+                        Name="LblSearchMessage"/>
+
+
+                        <ListBox 
+                        Visibility="Collapsed"
+                        Name="ListBoxSearchResult"
+                        Background="#424242"
+                        Foreground="#e8e8e8"
+                        Margin="10,0,0,0"
+                        FontSize="18"/>
+                </StackPanel>
+            </Border>
         </StackPanel>
-    </StackPanel>
+    </ScrollViewer>
 </Window>
