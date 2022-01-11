@@ -53,7 +53,7 @@
             </Setter>
             <Style.Triggers>
             </Style.Triggers>
-            </Style>
+        </Style>
     </Window.Resources>
 
     <ScrollViewer
@@ -68,6 +68,7 @@
                 <StackPanel
                     Orientation="Horizontal"
                     Margin="30,10,30,10">
+
                     <Label
                         Height="40"
                         FontSize="15"
@@ -77,6 +78,7 @@
                         Content="Status: " />
 
                     <Label
+                        Width="550"
                         Height="40"
                         FontSize="15"
                         Padding="0,8,0,0"
@@ -85,9 +87,69 @@
                         Foreground="#ffffff"
                         Content="NENHUM VÍDEO NA FILA"
                         Name="LblStatus"/>
+
+                    <Label
+                        Width="75"
+                        Height="40"
+                        FontSize="15"
+                        Padding="8"
+                        Foreground="#8a8a8a"
+                        FontWeight="Bold"
+                        Content="Na Fila: " />
+
+                    <Label
+                        Width="60"
+                        Height="40"
+                        FontSize="15"
+                        Padding="0,8,0,0"
+                        Margin="-5"
+                        FontWeight="UltraBold"
+                        Foreground="#8a8a8a"
+                        Content="0"
+                        Name="LblVideosInQueueCount"/>
+
+                    <Label
+                        Margin="20,0,0,0"
+                        Width="85"
+                        Height="40"
+                        FontSize="15"
+                        Padding="8"
+                        Foreground="#219422"
+                        FontWeight="Bold"
+                        Content="Baixados: " />
+
+                    <Label
+                        Width="60"
+                        Height="40"
+                        FontSize="15"
+                        Padding="0,8,0,0"
+                        FontWeight="UltraBold"
+                        Foreground="#219422"
+                        Content="0"
+                        Name="LblVideosDownloadedCount"/>
+
+                    <Label
+                        Margin="20,0,0,0"
+                        Height="40"
+                        FontSize="15"
+                        Padding="8"
+                        Foreground="#b52424"
+                        FontWeight="Bold"
+                        Content="Erros: " />
+
+                    <Label
+                        Width="60"
+                        Height="40"
+                        FontSize="15"
+                        Padding="0,8,0,0"
+                        Margin="-5"
+                        FontWeight="UltraBold"
+                        Foreground="#b52424"
+                        Content="0"
+                        Name="LblVideosErrorCount"/>
                 </StackPanel>
             </Border>
-            
+
             <Border 
                 Background="#212121"
                 BorderBrush="#212121"
@@ -249,7 +311,7 @@
                         Name="LblSearchMessage"/>
 
 
-                        <ListBox 
+                    <ListBox 
                         Visibility="Collapsed"
                         Name="ListBoxSearchResult"
                         Background="#424242"

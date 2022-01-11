@@ -56,10 +56,13 @@ namespace YoutubeDownloaderWPF
                         {
                             SetDownloadInProgressStatus(video.Title);
                             await _downloadService.DownloadVideo(video.Url, directory, downloadType);
+                            
                             SetDonwloadStatusInListBox(ApplicationStatus.Success, video.Title);
+                            IncreaseVideosDownloaded();
                         }
                         catch (Exception)
                         {
+                            IncreaseVideosError();
                             SetDonwloadStatusInListBox(ApplicationStatus.Error, video.Title);
                             continue;
                         }
@@ -76,6 +79,7 @@ namespace YoutubeDownloaderWPF
                     }
                     catch (Exception)
                     {
+                        IncreaseVideosError();
                         SetDonwloadStatusInListBox(ApplicationStatus.Error, video.Title);
                     }
                 }
@@ -113,6 +117,7 @@ namespace YoutubeDownloaderWPF
 
                 ListBoxSearchResult.ItemsSource = _mainViewModel.TitlesSearchResult;
 
+                UpdateVideosInQueue(_mainViewModel.TitlesSearchResult.Count);
                 AddSearchResult();
                 EnableDownloadButton();
                 SetApplicationStatus(ApplicationStatus.ResultsFound);
@@ -306,6 +311,8 @@ namespace YoutubeDownloaderWPF
                     break;
                 }
             }
+
+            ListBoxSearchResult.ItemsSource =  _mainViewModel.TitlesSearchResult;
         }
 
         private void EnableDownloadButton()
@@ -316,9 +323,39 @@ namespace YoutubeDownloaderWPF
 
         private void ClearOldSearchResults()
         {
+            ResetQueue();
             _mainViewModel.TitlesSearchResult.Clear();
             ListBoxSearchResult.ItemsSource = new List<ListBoxItem>();
         }
+
+        private void UpdateVideosInQueue(int count)
+        {
+            _mainViewModel.SetVideosInQueueCount(count);
+            LblVideosInQueueCount.Content = _mainViewModel.VideosInQueueCount;
+        }
+
+        private void IncreaseVideosDownloaded()
+        {
+            DecreaseVideosInQueue();
+            _mainViewModel.IncreaseVideosDownloadedCount();
+            LblVideosDownloadedCount.Content = _mainViewModel.VideosDownloadedCount;
+        }
+
+        private void IncreaseVideosError()
+        {
+            DecreaseVideosInQueue();
+            _mainViewModel.IncreaseVideosErrorCount();
+            LblVideosErrorCount.Content = _mainViewModel.VideosErrorsCount;
+        }
+
+        private void DecreaseVideosInQueue()
+        {
+            _mainViewModel.DecreaseVideosInQueueCount();
+            LblVideosInQueueCount.Content = _mainViewModel.VideosInQueueCount;
+        }
+
+        private void ResetQueue()
+            => _mainViewModel.QueueReset();
 
         #endregion
     }
